@@ -1,0 +1,226 @@
+.mapa-container {
+  position: relative;
+  height: 60vh;
+  width: 100%;
+}
+
+// Marcador central fixo (igual Uber)
+.marcador-central {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  z-index: 1000;
+  pointer-events: none;
+  
+  .ponta-marcador {
+    width: 24px;
+    height: 30px;
+    position: relative;
+    
+    &.cor-success {
+      background: linear-gradient(135deg, #2dd36f 0%, #1db954 100%);
+    }
+    
+    &.cor-danger {
+      background: linear-gradient(135deg, #eb445a 0%, #d33939 100%);
+    }
+    
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    border: 2px solid white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+    }
+  }
+  
+  .sombra-marcador {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    filter: blur(2px);
+  }
+}
+
+// Círculo de precisão GPS
+.circulo-precisao {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--ion-color-primary);
+  border-radius: 50%;
+  background: rgba(var(--ion-color-primary-rgb), 0.1);
+  pointer-events: none;
+  z-index: 999;
+  animation: pulse-precision 2s infinite;
+}
+
+@keyframes pulse-precision {
+  0%, 100% { 
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% { 
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+// Informações da localização
+.info-localizacao {
+  background: white;
+  padding: 16px;
+  border-top: 1px solid var(--ion-color-light-shade);
+  
+  .endereco-atual {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    
+    ion-icon {
+      font-size: 24px;
+      margin-top: 2px;
+    }
+    
+    .texto-endereco {
+      flex: 1;
+      
+      h3 {
+        margin: 0 0 4px 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--ion-color-dark);
+      }
+      
+      p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--ion-color-medium-shade);
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+// Seção de pontos próximos
+.secao-pontos {
+  padding: 0 16px 100px 16px; // Extra padding bottom para o botão flutuante
+  
+  h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 20px 0 12px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+    
+    ion-icon {
+      color: var(--ion-color-medium);
+    }
+  }
+  
+  ion-list {
+    background: transparent;
+    
+    ion-item {
+      --background: white;
+      --border-radius: 12px;
+      --padding-start: 12px;
+      --padding-end: 12px;
+      margin-bottom: 8px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      
+      &:hover {
+        --background: #f8f9fa;
+      }
+      
+      ion-icon {
+        font-size: 20px;
+      }
+      
+      ion-label {
+        h3 {
+          font-weight: 600;
+          font-size: 0.95rem;
+          margin-bottom: 4px;
+          color: var(--ion-color-dark);
+        }
+        
+        p {
+          font-size: 0.8rem;
+          color: var(--ion-color-medium);
+          margin: 2px 0;
+          
+          &.distancia {
+            color: var(--ion-color-primary);
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Loading dos pontos
+.loading-pontos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px;
+  
+  ion-spinner {
+    margin-bottom: 12px;
+  }
+  
+  p {
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+}
+
+// Botão de confirmação flutuante
+.botao-confirmar {
+  position: fixed;
+  bottom: 20px;
+  left: 16px;
+  right: 16px;
+  z-index: 1001;
+  
+  ion-button {
+    --border-radius: 16px;
+    --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    height: 56px;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+// Estilo responsivo para telas menores
+@media (max-height: 600px) {
+  .mapa-container {
+    height: 50vh;
+  }
+  
+  .secao-pontos {
+    padding-bottom: 80px;
+  }
+}

@@ -1,0 +1,32 @@
+# Dependências e artefatos
+node_modules/
+.dist/
+dist/
+build/
+.cache/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ambiente
+.env
+.env.*
+!.env.exemplo
+
+# IDE/Editor
+.vscode/
+.idea/
+
+# Testes e cobertura
+**/.pytest_cache/
+**/.mypy_cache/
+**/.coverage
+**/htmlcov/
+
+# Ionic/Angular
+www/
+platforms/
+plugins/

@@ -1,0 +1,7 @@
+{
+  "name": "motorista-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const environment = {\n  production: false,\n  useMock: false,\n  apiUrl: 'http://localhost:8000/api/v1',\n  wsUrl: 'ws://localhost:8000',\n  // Google Maps API - Obtenha em https://console.cloud.google.com/\n  googleMapsApiKey: 'AIzaSyAgUZqGiggl_Oc9s4nUZ9VERLreIxvumzM'\n};","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

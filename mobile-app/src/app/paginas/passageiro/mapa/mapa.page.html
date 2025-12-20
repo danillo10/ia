@@ -1,0 +1,186 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Solicitar Corrida</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/passageiro/historico">
+        <ion-icon name="time-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Mapa Google Interativo -->
+  <app-mapa-google 
+    #mapaGoogle
+    altura="350px"
+    [origemLat]="origem?.lat"
+    [origemLon]="origem?.lon"
+    [destinoLat]="destino?.lat"
+    [destinoLon]="destino?.lon"
+    [motoristaLat]="motoristaLat"
+    [motoristaLon]="motoristaLon"
+    [permiteArrastarOrigem]="true"
+    (origemAlterada)="onOrigemArrastada($event)"
+    (mapaClicado)="onMapaClicado($event)"
+  ></app-mapa-google>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>📍 De onde você está?</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="search-container">
+        <ion-item lines="none" class="search-item">
+          <ion-icon name="search" slot="start"></ion-icon>
+          <ion-input 
+            [(ngModel)]="buscaOrigemTexto"
+            (ionInput)="onBuscaOrigemChange($event)"
+            placeholder="Ex: Rua da União (sem número)"
+            debounce="300"
+          ></ion-input>
+          <ion-icon 
+            *ngIf="buscaOrigemTexto" 
+            name="close-circle" 
+            slot="end" 
+            (click)="buscaOrigemTexto = ''; sugestoesOrigem = []; mostrarSugestoesOrigem = false"
+            class="clear-icon"
+          ></ion-icon>
+        </ion-item>
+        
+        <!-- Botão para usar localização atual -->
+        <ion-button 
+          expand="block" 
+          fill="outline" 
+          (click)="ativarModoSelecionarOrigem()"
+          class="btn-marcar-mapa"
+        >
+          <ion-icon name="navigate-outline" slot="start"></ion-icon>
+          Usar Minha Localização
+        </ion-button>
+        
+        <!-- Sugestões de Endereços -->
+        <ion-list *ngIf="mostrarSugestoesOrigem && sugestoesOrigem.length > 0" class="sugestoes-list">
+          <ion-item 
+            *ngFor="let sugestao of sugestoesOrigem" 
+            button
+            (click)="selecionarOrigem(sugestao)"
+            detail="false"
+          >
+            <ion-icon [name]="obterIconeSugestao(sugestao.tipo)" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h3>{{ sugestao.nome }}</h3>
+              <p>{{ sugestao.nomeCompleto }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        
+        <ion-text *ngIf="buscaOrigemTexto.length > 0 && buscaOrigemTexto.length < 3" class="hint-text">
+          <p>Digite pelo menos 3 caracteres para buscar</p>
+        </ion-text>
+      </div>
+      
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>🎯 Para onde você vai?</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="search-container">
+        <ion-item lines="none" class="search-item">
+          <ion-icon name="search" slot="start"></ion-icon>
+          <ion-input 
+            [(ngModel)]="buscaDestinoTexto"
+            (ionInput)="onBuscaDestinoChange($event)"
+            placeholder="Ex: Shopping Recife (próximos a você)"
+            debounce="300"
+          ></ion-input>
+          <ion-icon 
+            *ngIf="buscaDestinoTexto" 
+            name="close-circle" 
+            slot="end" 
+            (click)="buscaDestinoTexto = ''; sugestoesDestino = []; mostrarSugestoesDestino = false"
+            class="clear-icon"
+          ></ion-icon>
+        </ion-item>
+        
+        <!-- Sugestões de Endereços -->
+        <ion-list *ngIf="mostrarSugestoesDestino && sugestoesDestino.length > 0" class="sugestoes-list">
+          <ion-item 
+            *ngFor="let sugestao of sugestoesDestino" 
+            button
+            (click)="selecionarDestino(sugestao)"
+            detail="false"
+          >
+            <ion-icon [name]="obterIconeSugestao(sugestao.tipo)" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h3>{{ sugestao.nome }}</h3>
+              <p>{{ sugestao.nomeCompleto }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        
+        <ion-text *ngIf="buscaDestinoTexto.length > 0 && buscaDestinoTexto.length < 3" class="hint-text">
+          <p>Digite pelo menos 3 caracteres para buscar</p>
+        </ion-text>
+      </div>
+
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Card de estimativa flutuante -->
+  <div *ngIf="exibirEstimativa && estimativa" class="estimativa-flutuante">
+    <ion-card class="estimativa-card">
+      <ion-card-header>
+        <ion-card-title>💰 Estimativa da Corrida</ion-card-title>
+        <ion-button 
+          fill="clear" 
+          size="small" 
+          (click)="exibirEstimativa = false"
+          class="btn-fechar"
+        >
+          <ion-icon name="close" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-icon name="speedometer-outline" slot="start" color="primary"></ion-icon>
+          <ion-label>
+            <p>Distância</p>
+            <h2>{{ estimativa.rota.distancia_km | number:'1.1-1' }} km</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-icon name="time-outline" slot="start" color="primary"></ion-icon>
+          <ion-label>
+            <p>Tempo Estimado</p>
+            <h2>{{ estimativa.rota.duracao_min | number:'1.0-0' }} min</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-icon name="cash-outline" slot="start" color="success"></ion-icon>
+          <ion-label>
+            <p>Preço</p>
+            <h1 style="color: var(--ion-color-success)">R$ {{ estimativa.preco_estimado.toFixed(2) }}</h1>
+          </ion-label>
+        </ion-item>
+
+        <ion-button 
+          expand="block" 
+          color="success" 
+          size="large"
+          (click)="solicitarCorrida()"
+        >
+          <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+          Solicitar Corrida
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

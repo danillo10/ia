@@ -1,0 +1,122 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>MotoTáxi - Motorista</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="conteudo-principal">
+    <!-- Card de Ganhos -->
+    <ion-card class="card-ganhos">
+      <ion-card-content>
+        <div class="ganhos-header">
+          <ion-label>HOJE</ion-label>
+          <ion-icon name="help-circle-outline" class="icone-ajuda"></ion-icon>
+        </div>
+        <div class="valor-ganhos">
+          <span class="moeda">R$</span>
+          <span class="valor">{{ ganhosHoje }}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Card de Estatísticas -->
+    <ion-card>
+      <ion-card-content>
+        <h3>{{ totalViagensHoje }} viagens concluídas</h3>
+        <ion-button expand="block" fill="clear" color="primary">
+          VER TODAS AS VIAGENS
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Mapa de Corridas - só aparece quando online -->
+    <div *ngIf="online" class="mapa-container">
+      <div id="mapa-motorista" class="mapa-google"></div>
+      
+      <div class="badge-buscando">
+        <ion-spinner name="crescent" color="success"></ion-spinner>
+        <span>Buscando corridas próximas...</span>
+      </div>
+    </div>
+
+    <!-- Mensagem quando offline -->
+    <div *ngIf="!online" class="mensagem-offline">
+      <ion-icon name="car-outline" class="icone-grande"></ion-icon>
+      <h2>Fique online para começar</h2>
+      <p>Clique no botão abaixo para ficar disponível para corridas</p>
+    </div>
+  </div>
+
+  <!-- Botão redondo - só aparece quando offline -->
+  <div *ngIf="!online" class="container-botao-status">
+    <ion-button
+      class="botao-status-redondo"
+      color="success"
+      [disabled]="processandoToggle"
+      (click)="alternarStatus()">
+      <div class="conteudo-botao-status">
+        <ion-icon name="power" class="icone-status"></ion-icon>
+        <div class="texto-status">
+          FICAR ONLINE
+        </div>
+      </div>
+    </ion-button>
+  </div>
+
+  <!-- Menu hambúrguer - sempre aparece -->
+  <div class="menu-hamburger">
+    <ion-button 
+      fill="clear" 
+      class="botao-menu"
+      (click)="toggleMenu()">
+      <ion-icon name="menu-outline" size="large"></ion-icon>
+    </ion-button>
+    
+    <!-- Menu expansível -->
+    <div *ngIf="menuAberto" class="menu-opcoes">
+      <ion-button 
+        *ngIf="online"
+        expand="block" 
+        color="danger" 
+        class="botao-menu-item"
+        [disabled]="processandoToggle"
+        (click)="ficarOfflineDoMenu()">
+        <ion-icon name="stop-circle-outline" slot="start"></ion-icon>
+        FICAR OFFLINE
+      </ion-button>
+      
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        color="primary"
+        class="botao-menu-item"
+        (click)="checarStatusServicos()">
+        <ion-icon name="server-outline" slot="start"></ion-icon>
+        STATUS DOS SERVIÇOS
+      </ion-button>
+      
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        color="medium"
+        class="botao-menu-item"
+        (click)="sairDoMenu()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        SAIR
+      </ion-button>
+      
+      <ion-button 
+        expand="block" 
+        fill="clear" 
+        color="dark"
+        class="botao-menu-fechar"
+        (click)="toggleMenu()">
+        <ion-icon name="close-outline" slot="start"></ion-icon>
+        FECHAR
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+
+

@@ -1,0 +1,252 @@
+.conteudo-principal {
+  padding: 16px;
+  padding-bottom: 100px; // Espaço para o FAB
+}
+
+// Card de Ganhos
+.card-ganhos {
+  background: #000;
+  color: #fff;
+  border-radius: 24px;
+  margin-bottom: 16px;
+  
+  ion-card-content {
+    padding: 20px;
+  }
+  
+  .ganhos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    
+    ion-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    
+    .icone-ajuda {
+      font-size: 20px;
+      color: #fff;
+    }
+  }
+  
+  .valor-ganhos {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    
+    .moeda {
+      font-size: 20px;
+      font-weight: 500;
+    }
+    
+    .valor {
+      font-size: 40px;
+      font-weight: 700;
+    }
+  }
+}
+
+// Mapa
+.mapa-container {
+  position: relative;
+  height: 400px;
+  background: #f0f0f0;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  
+
+  
+  .mapa-fundo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e8eaf6 0%, #f5f5f5 100%);
+    
+    .icone-mapa {
+      font-size: 80px;
+      color: #9e9e9e;
+      opacity: 0.3;
+    }
+  }
+}
+
+// Mensagem quando offline
+.mensagem-offline {
+  text-align: center;
+  padding: 60px 20px;
+  
+  .icone-grande {
+    font-size: 80px;
+    color: var(--ion-color-medium);
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    color: var(--ion-color-dark);
+    margin-bottom: 12px;
+  }
+  
+  p {
+    color: var(--ion-color-medium);
+    line-height: 1.5;
+  }
+}
+
+// Mapa Google quando online
+.mapa-google {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.badge-buscando {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 20px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  
+  ion-spinner {
+    width: 20px;
+    height: 20px;
+  }
+  
+  span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ion-color-success);
+  }
+}
+
+// Botão redondo para ficar online
+.container-botao-status {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.botao-status-redondo {
+  pointer-events: auto;
+  width: 120px;
+  height: 120px;
+  margin: 0;
+  --border-radius: 50%;
+  --box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-transform: none;
+
+  &[disabled] {
+    opacity: 0.6;
+  }
+}
+
+.conteudo-botao-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.icone-status {
+  font-size: 32px;
+}
+
+.texto-status {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+// Menu hambúrguer - sempre visível
+.menu-hamburger {
+  position: fixed;
+  top: calc(80px + env(safe-area-inset-top));
+  right: 16px;
+  z-index: 999;
+  
+  .botao-menu {
+    --color: var(--ion-color-dark);
+    --background: rgba(255, 255, 255, 0.95);
+    --border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+    
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+.menu-opcoes {
+  position: absolute;
+  top: 64px;
+  right: 0;
+  min-width: 240px;
+  background: white;
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.2s ease-out;
+  
+  ion-button {
+    margin: 4px 0;
+    --border-radius: 10px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    
+    &.botao-menu-item {
+      height: 48px;
+    }
+    
+    &.botao-menu-fechar {
+      margin-top: 8px;
+      border-top: 1px solid var(--ion-color-light);
+      font-size: 13px;
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+ion-card {
+  margin-bottom: 16px;
+  
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #000;
+  }
+}

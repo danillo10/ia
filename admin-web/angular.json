@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/angular.json",
+  "version": 1,
+  "projects": {
+    "admin": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/admin",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": ["zone.js"],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/leaflet/dist/leaflet.css"
+            ],
+            "tsConfig": "tsconfig.app.json"
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "admin:build",
+            "host": "0.0.0.0",
+            "port": 4201
+          }
+        }
+      }
+    }
+  },
+  "cli": {}
+}

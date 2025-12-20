@@ -1,0 +1,35 @@
+.perfil-container {
+  text-align: center;
+  margin-top: 2rem;
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: var(--ion-color-medium);
+    margin-bottom: 2rem;
+  }
+}
+
+ion-card {
+  margin: 1rem auto;
+  max-width: 400px;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  ion-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    ion-icon {
+      font-size: 1.5rem;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/motociclista/chamadas"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Minha Carteira</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card class="saldo-card">
+    <ion-card-header>
+      <ion-card-subtitle>Saldo Disponível</ion-card-subtitle>
+      <ion-card-title class="saldo">R$ {{ saldo.toFixed(2) }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" color="success">
+        <ion-icon name="cash-outline" slot="start"></ion-icon>
+        Solicitar Saque
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Extrato</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let item of historico">
+          <ion-label>
+            <h3>{{ item.descricao }}</h3>
+            <p>{{ item.data }}</p>
+          </ion-label>
+          <ion-note slot="end" [color]="item.tipo === 'credito' ? 'success' : 'danger'">
+            {{ item.tipo === 'credito' ? '+' : '' }} R$ {{ item.valor.toFixed(2) }}
+          </ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

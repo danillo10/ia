@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Selecionar Perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="sair()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="perfil-container">
+    <h2>Olá, {{ usuario?.nome }}!</h2>
+    <p>Como deseja continuar?</p>
+
+    <ion-card button (click)="selecionarPassageiro()">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="person-outline"></ion-icon>
+          Passageiro
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Solicitar corridas e acompanhar motoristas
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card button (click)="selecionarMotociclista()">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="bicycle-outline"></ion-icon>
+          Motociclista
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Aceitar chamadas e realizar corridas
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

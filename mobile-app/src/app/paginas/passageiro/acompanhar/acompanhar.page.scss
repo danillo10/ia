@@ -1,0 +1,36 @@
+app-mapa-google {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.status-container {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.status-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.motoristas-disponiveis {
+  font-size: 0.9rem;
+  color: var(--ion-color-success);
+  font-weight: 500;
+  margin: 0;
+}
+
+.label-small {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.price-final {
+  color: var(--ion-color-success);
+  font-weight: bold;
+}

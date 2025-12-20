@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{ modoRegistro ? 'Criar Conta' : 'Entrar' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="logo-container">
+    <h1>🏍️ Moto Táxi</h1>
+    <p>Mobilidade urbana rápida e segura</p>
+    <p class="subtitle">App do Passageiro</p>
+  </div>
+
+  <!-- Login Rápido - Modo Passageiro -->
+  <ion-card class="login-rapido">
+    <ion-card-header>
+      <ion-card-title>Entrar como Passageiro</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" color="primary" size="large" (click)="entrarComoPassageiro()">
+        <ion-icon name="person" slot="start"></ion-icon>
+        Entrar Agora
+      </ion-button>
+      <p class="hint">Clique para começar a usar o app</p>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="divider">
+    <span>ou use credenciais personalizadas</span>
+  </div>
+
+  <form [formGroup]="formulario" (ngSubmit)="enviar()">
+    <ion-item>
+      <ion-label position="floating">E-mail</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Senha</ion-label>
+      <ion-input formControlName="senha" type="password"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" class="ion-margin-top">
+      Entrar
+    </ion-button>
+  </form>
+</ion-content>

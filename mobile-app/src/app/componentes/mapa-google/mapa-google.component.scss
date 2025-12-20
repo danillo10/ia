@@ -1,0 +1,40 @@
+.mapa-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--ion-color-medium-tint);
+}
+
+// Estilização dos controles do Google Maps
+:global(.gm-style .gm-style-iw) {
+  font-family: var(--ion-font-family);
+}
+
+:global(.gm-style .gm-style-iw-c) {
+  border-radius: 8px;
+}
+
+// Customização dos botões do Google Maps
+:global(.gm-style .gm-style-cc) {
+  font-family: var(--ion-font-family);
+  font-size: 12px;
+}
+
+// Estilo do InfoWindow
+:global(.gm-style .gm-style-iw-d) {
+  overflow: visible !important;
+}
+
+// Loading indicator personalizado
+.mapa-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--ion-color-light);
+  color: var(--ion-color-medium);
+  font-size: 14px;
+}
+
+.mapa-loading ion-spinner {
+  margin-right: 8px;
+}

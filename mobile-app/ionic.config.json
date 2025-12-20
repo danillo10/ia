@@ -1,0 +1,7 @@
+{
+  "name": "mototaxi-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

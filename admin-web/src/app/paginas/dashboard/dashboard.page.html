@@ -1,0 +1,85 @@
+<div class="dashboard-page">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>Dashboard Admin - Motoristas Online</h1>
+      <div class="header-stats">
+        <div class="stat-badge stat-online">
+          <span class="stat-icon">✓</span>
+          <span class="stat-label">{{ totalOnline }} Online</span>
+        </div>
+        <div class="stat-badge stat-total">
+          <span class="stat-icon">👥</span>
+          <span class="stat-label">{{ totalMotoristas }} Total</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-nav">
+      <a routerLink="/corridas" class="nav-link">
+        🚖 Ver Corridas
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="dashboard-content">
+    <!-- Mapa -->
+    <div class="mapa-section">
+      <div id="mapa" class="mapa"></div>
+      
+      <div *ngIf="carregando" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Carregando motoristas...</p>
+      </div>
+      
+      <div *ngIf="erro" class="erro-overlay">
+        <span class="erro-icon">⚠️</span>
+        <p>{{ erro }}</p>
+        <button class="btn-retry" (click)="carregarMotoristas()">
+          🔄 Tentar Novamente
+        </button>
+      </div>
+    </div>
+    
+    <!-- Lista de Motoristas -->
+    <aside class="motoristas-section">
+      <h2>Motoristas</h2>
+      
+      <div *ngIf="motoristas.length === 0 && !carregando" class="lista-vazia">
+        <span class="icone-vazio">🏍️</span>
+        <p>Nenhum motorista online</p>
+      </div>
+      
+      <ul class="motoristas-lista">
+        <li 
+          *ngFor="let motorista of motoristas" 
+          class="motorista-item"
+          [class.online]="motorista.online"
+          (click)="centralizarMotorista(motorista)">
+          
+          <div class="motorista-status">
+            <span 
+              class="status-indicator" 
+              [class.online]="motorista.online">
+            </span>
+          </div>
+          
+          <div class="motorista-info">
+            <h3>{{ motorista.nome }}</h3>
+            <p class="motorista-telefone">{{ motorista.telefone }}</p>
+            <p *ngIf="motorista.placa" class="motorista-placa">Placa: {{ motorista.placa }}</p>
+          </div>
+          
+          <div class="motorista-meta">
+            <span *ngIf="motorista.online && motorista.ultima_localizacao_em" class="tempo-atualizacao">
+              {{ obterTempoDesdeUltimaAtualizacao(motorista.ultima_localizacao_em) }}
+            </span>
+            <span class="badge" [class.badge-online]="motorista.online">
+              {{ motorista.online ? 'Online' : 'Offline' }}
+            </span>
+          </div>
+        </li>
+      </ul>
+    </aside>
+  </div>
+</div>

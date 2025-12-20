@@ -1,0 +1,215 @@
+app-mapa-google {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.search-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.search-item {
+  --background: #f5f5f5;
+  --border-radius: 12px;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  
+  ion-input {
+    font-size: 0.95rem;
+  }
+  
+  .clear-icon {
+    cursor: pointer;
+    color: var(--ion-color-medium);
+  }
+}
+
+.sugestoes-list {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+  
+  ion-item {
+    --padding-start: 12px;
+    cursor: pointer;
+    
+    &:hover {
+      --background: #f0f0f0;
+    }
+    
+    h3 {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    
+    p {
+      font-size: 0.8rem;
+      color: var(--ion-color-medium);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.hint-text {
+  display: block;
+  text-align: center;
+  padding: 0.5rem;
+  
+  p {
+    color: var(--ion-color-medium);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+}
+
+.btn-marcar-mapa {
+  margin-top: 0.5rem;
+  --border-radius: 12px;
+  height: 44px;
+  font-weight: 500;
+  
+  ion-icon {
+    font-size: 1.2rem;
+  }
+}
+
+.alerta-selecao {
+  margin-bottom: 1rem;
+  
+  ion-card-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    
+    ion-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    
+    strong {
+      flex-grow: 1;
+    }
+    
+    ion-button {
+      flex-shrink: 0;
+      margin: 0;
+      height: 32px;
+    }
+  }
+}
+
+.gps-button {
+  margin-top: 0.5rem;
+}
+
+.botao-selecionar {
+  margin-top: 12px;
+  --border-radius: 12px;
+  height: 48px;
+  font-weight: 600;
+  
+  &[color="success"] {
+    --box-shadow: 0 4px 12px rgba(45, 211, 111, 0.3);
+  }
+  
+  &[color="danger"] {
+    --box-shadow: 0 4px 12px rgba(235, 68, 90, 0.2);
+  }
+}
+
+.dica-selecionar {
+  display: block;
+  padding: 8px 12px;
+  margin-top: 8px;
+  background: rgba(var(--ion-color-success-rgb), 0.1);
+  border-radius: 8px;
+  border-left: 3px solid var(--ion-color-success);
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+ion-card {
+  margin-bottom: 1rem;
+  
+  ion-card-title {
+    font-size: 1.1rem;
+  }
+}
+
+.estimativa-flutuante {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0;
+  margin: 0;
+  animation: slideUp 0.3s ease-out;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.estimativa-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  margin: 0;
+  border-radius: 20px 20px 0 0;
+  
+  ion-card-header {
+    padding-bottom: 0;
+    position: relative;
+    
+    .btn-fechar {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      color: white;
+      --color: white;
+    }
+  }
+  
+  ion-card-title {
+    color: white;
+  }
+  
+  ion-item {
+    --background: transparent;
+    --color: white;
+    
+    ion-icon {
+      color: white;
+    }
+    
+    ion-label {
+      color: white;
+      
+      p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.85rem;
+      }
+      
+      h1, h2 {
+        color: white;
+        font-weight: bold;
+      }
+    }
+  }
+}
+

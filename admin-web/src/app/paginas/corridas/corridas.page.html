@@ -1,0 +1,152 @@
+<div class="corridas-page">
+  <!-- Header com Navegação -->
+  <header class="corridas-header">
+    <div class="header-content">
+      <h1>Corridas</h1>
+      <nav class="corridas-nav">
+        <button 
+          class="nav-btn" 
+          [class.active]="filtroEstado === 'todas'"
+          (click)="filtrarPor('todas')">
+          📋 Todas
+        </button>
+        <button 
+          class="nav-btn" 
+          [class.active]="filtroEstado === 'buscando'"
+          (click)="filtrarPor('buscando')">
+          🔍 Em Chamada
+        </button>
+        <button 
+          class="nav-btn" 
+          [class.active]="filtroEstado === 'ativas'"
+          (click)="filtrarPor('ativas')">
+          🚀 Ativas
+        </button>
+        <button 
+          class="nav-btn" 
+          [class.active]="filtroEstado === 'canceladas'"
+          (click)="filtrarPor('canceladas')">
+          ❌ Canceladas
+        </button>
+        <button 
+          class="nav-btn" 
+          [class.active]="filtroEstado === 'finalizadas'"
+          (click)="filtrarPor('finalizadas')">
+          ✓ Finalizadas
+        </button>
+      </nav>
+    </div>
+    <div class="header-actions">
+      <button class="btn-refresh" (click)="carregarCorridas()">
+        🔄 Atualizar
+      </button>
+      <a routerLink="/dashboard" class="btn-back">
+        ← Voltar
+      </a>
+    </div>
+  </header>
+
+  <!-- Conteúdo -->
+  <div class="corridas-content">
+    <div *ngIf="carregando" class="loading">
+      <div class="spinner"></div>
+      <p>Carregando corridas...</p>
+    </div>
+
+    <div *ngIf="erro" class="erro">
+      <span>⚠️</span>
+      <p>{{ erro }}</p>
+    </div>
+
+    <div *ngIf="!carregando && corridasFiltradas.length === 0" class="lista-vazia">
+      <span>🚕</span>
+      <p>Nenhuma corrida encontrada</p>
+    </div>
+
+    <div class="corridas-grid" *ngIf="!carregando && corridasFiltradas.length > 0">
+      <div 
+        *ngFor="let corrida of corridasFiltradas" 
+        class="corrida-card"
+        [class.buscando]="corrida.estado === 'buscando'"
+        [class.ativa]="corrida.estado === 'aceita' || corrida.estado === 'iniciada' || corrida.estado === 'em_andamento'"
+        [class.cancelada]="corrida.estado === 'cancelada'"
+        [class.finalizada]="corrida.estado === 'finalizada'">
+        
+        <div class="corrida-header">
+          <span class="corrida-id">#{{ corrida.id }}</span>
+          <span class="corrida-badge" [ngClass]="'badge-' + corrida.estado">
+            {{ obterTextoEstado(corrida.estado) }}
+          </span>
+        </div>
+
+        <div class="corrida-info">
+          <div class="info-row">
+            <span class="label">👤 Passageiro:</span>
+            <span class="value">{{ corrida.passageiro?.nome || 'ID ' + corrida.passageiro_id }}</span>
+          </div>
+          
+          <div class="info-row" *ngIf="corrida.motorista">
+            <span class="label">🏍️ Motorista:</span>
+            <span class="value">{{ corrida.motorista?.nome || 'ID ' + corrida.motorista_id }}</span>
+          </div>
+
+          <div class="info-separator"></div>
+
+          <div class="info-row">
+            <span class="label">📍 Origem:</span>
+            <span class="value endereco">{{ corrida.origem_endereco || formatarCoordenadas(corrida.origem_lat, corrida.origem_lon) }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">🎯 Destino:</span>
+            <span class="value endereco">{{ corrida.destino_endereco || formatarCoordenadas(corrida.destino_lat, corrida.destino_lon) }}</span>
+          </div>
+
+          <div class="info-separator"></div>
+
+          <div class="info-row">
+            <span class="label">📏 Distância:</span>
+            <span class="value">{{ corrida.distancia_km }} km</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">⏱️ Duração:</span>
+            <span class="value">~{{ corrida.duracao_min }} min</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">💰 Valor Passageiro:</span>
+            <span class="value preco">R$ {{ corrida.preco_estimado?.toFixed(2) }}</span>
+          </div>
+
+          <div class="info-row" *ngIf="corrida.preco_motorista">
+            <span class="label">💵 Valor Motorista:</span>
+            <span class="value preco-motorista">R$ {{ corrida.preco_motorista?.toFixed(2) }}</span>
+          </div>
+
+          <div class="info-separator"></div>
+
+          <div class="info-row">
+            <span class="label">🕐 Criada:</span>
+            <span class="value timestamp">{{ formatarData(corrida.criado_em) }}</span>
+          </div>
+
+          <div class="info-row" *ngIf="corrida.aceito_em">
+            <span class="label">✓ Aceita:</span>
+            <span class="value timestamp">{{ formatarData(corrida.aceito_em) }}</span>
+          </div>
+
+          <div class="info-row" *ngIf="corrida.iniciado_em">
+            <span class="label">🚦 Iniciada:</span>
+            <span class="value timestamp">{{ formatarData(corrida.iniciado_em) }}</span>
+          </div>
+
+          <div class="info-row" *ngIf="corrida.finalizado_em">
+            <span class="label">🏁 Finalizada:</span>
+            <span class="value timestamp">{{ formatarData(corrida.finalizado_em) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

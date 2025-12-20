@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/motociclista/chamadas"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Corrida #{{ corridaId }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="mapa-placeholder">
+    <ion-icon name="map-outline"></ion-icon>
+    <p>Navegação em tempo real</p>
+  </div>
+
+  <ion-card *ngIf="corrida">
+    <ion-card-header>
+      <ion-card-title>{{ obterTextoEstado() }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Estado:</strong> {{ corrida.estado }}</p>
+      <p><strong>Distância total:</strong> {{ corrida.distancia_km | number:'1.1-1' }} km</p>
+      <p><strong>Tempo estimado:</strong> {{ corrida.duracao_min }} min</p>
+      <p><strong>Valor estimado:</strong> R$ {{ corrida.preco_estimado?.toFixed(2) }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="corrida?.estado === 'aceita'">
+    <ion-card-header>
+      <ion-card-title>Verificação de Segurança</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Tire uma foto do capacete antes de iniciar</p>
+      <ion-button expand="block" (click)="tirarFotoCapacete()">
+        <ion-icon name="camera-outline" slot="start"></ion-icon>
+        {{ fotoCapacete ? 'Foto Capturada ✓' : 'Tirar Foto do Capacete' }}
+      </ion-button>
+
+      <img *ngIf="fotoCapacete" [src]="fotoCapacete" class="preview-foto" />
+
+      <ion-button 
+        expand="block" 
+        color="success" 
+        (click)="iniciarCorrida()"
+        [disabled]="!fotoCapacete"
+        class="ion-margin-top"
+      >
+        Iniciar Corrida
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button 
+    expand="block" 
+    color="primary" 
+    size="large"
+    (click)="finalizarCorrida()"
+    *ngIf="corrida?.estado === 'em_andamento'"
+  >
+    <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+    Finalizar Corrida
+  </ion-button>
+</ion-content>

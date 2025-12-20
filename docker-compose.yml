@@ -1,0 +1,63 @@
+services:
+  backend:
+    build: ./backend
+    container_name: mototaxi-backend
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+      - redis
+      - rabbitmq
+    volumes:
+      - ./backend:/app
+    restart: unless-stopped
+    command: ["sh", "-c", "alembic upgrade head || true; uvicorn app.main:api --host ${API_HOST:-0.0.0.0} --port ${API_PORT:-8000} --reload"]
+
+  mysql:
+    image: mysql:8.0
+    container_name: mototaxi-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mototaxi
+      MYSQL_USER: mototaxi
+      MYSQL_PASSWORD: mototaxi
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysqldata:/var/lib/mysql
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+
+  redis:
+    image: redis:7-alpine
+    container_name: mototaxi-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: mototaxi-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: unless-stopped
+
+  admin-web:
+    build: ./admin-web
+    container_name: mototaxi-admin
+    env_file:
+      - .env
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./admin-web:/usr/src/app
+    restart: unless-stopped
+
+volumes:
+  mysqldata:

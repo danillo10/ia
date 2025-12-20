@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="voltar()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ obterTitulo() }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="obterLocalizacaoAtual()" *ngIf="tipo === 'origem'">
+        <ion-icon name="locate"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Mapa Full Screen com Marcador Central -->
+  <div class="mapa-container">
+    <app-mapa-google-selector
+      [centralizarLat]="centroPontaLat"
+      [centralizarLon]="centroPontaLon"
+      [precisaoGps]="precisaoGps"
+      [corMarcador]="obterCorMarcador()"
+      (mapaCentralizado)="onMapaCentralizado($event)"
+    ></app-mapa-google-selector>
+    
+    <!-- Marcador Central Fixo (igual Uber) -->
+    <div class="marcador-central">
+      <div class="ponta-marcador" [class]="'cor-' + obterCorMarcador()"></div>
+      <div class="sombra-marcador"></div>
+    </div>
+
+    <!-- Círculo de Precisão GPS (se disponível) -->
+    <div class="circulo-precisao" *ngIf="precisaoGps > 0" 
+         [style.width.px]="Math.min(precisaoGps / 2, 100)"
+         [style.height.px]="Math.min(precisaoGps / 2, 100)">
+    </div>
+  </div>
+
+  <!-- Informações da Localização Atual -->
+  <div class="info-localizacao">
+    <div class="endereco-atual">
+      <ion-icon name="location" [color]="obterCorMarcador()"></ion-icon>
+      <div class="texto-endereco">
+        <h3>{{ tipo === 'origem' ? 'Sua localização' : 'Destino selecionado' }}</h3>
+        <p>{{ enderecoSelecionado || 'Aguardando seleção...' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pontos de Referência Próximos -->
+  <div class="secao-pontos" *ngIf="!carregandoPontos && pontosReferencia.length > 0">
+    <h4>
+      <ion-icon name="business-outline"></ion-icon>
+      Pontos próximos para referência
+    </h4>
+    
+    <ion-list lines="none">
+      <ion-item 
+        *ngFor="let ponto of pontosReferencia" 
+        button
+        (click)="selecionarPontoReferencia(ponto)"
+        detail="false"
+      >
+        <ion-icon 
+          name="business-outline" 
+          slot="start" 
+          color="medium"
+        ></ion-icon>
+        <ion-label>
+          <h3>{{ ponto.nome }}</h3>
+          <p>{{ ponto.nomeCompleto }}</p>
+          <p class="distancia">
+            ~{{ calcularDistancia(centroPontaLat, centroPontaLon, ponto.lat, ponto.lon) * 1000 | number:'1.0-0' }}m
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Loading dos Pontos -->
+  <div class="loading-pontos" *ngIf="carregandoPontos">
+    <ion-spinner name="dots"></ion-spinner>
+    <p>Buscando pontos próximos...</p>
+  </div>
+
+  <!-- Botão de Confirmação Flutuante -->
+  <div class="botao-confirmar">
+    <ion-button 
+      expand="block" 
+      size="large"
+      [color]="obterCorMarcador()"
+      (click)="confirmarLocalizacao()"
+      [disabled]="!localizacaoSelecionada"
+    >
+      <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+      Confirmar {{ tipo === 'origem' ? 'Localização' : 'Destino' }}
+    </ion-button>
+  </div>
+</ion-content>

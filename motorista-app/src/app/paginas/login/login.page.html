@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>MotoTáxi - Motorista</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <div class="logo-container">
+      <ion-icon name="person-outline" size="large" color="primary"></ion-icon>
+      <h1>Área do Motorista</h1>
+      <p>Faça login para receber corridas</p>
+    </div>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Entrar</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input 
+            type="email" 
+            [(ngModel)]="email" 
+            placeholder="seu@email.com"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
+          <ion-label position="stacked">Senha</ion-label>
+          <ion-input 
+            type="password" 
+            [(ngModel)]="senha" 
+            placeholder="Sua senha"
+          ></ion-input>
+        </ion-item>
+
+        <ion-button 
+          expand="block" 
+          size="large"
+          (click)="entrar()"
+          class="ion-margin-top"
+        >
+          <ion-icon name="log-in-outline" slot="start"></ion-icon>
+          Entrar
+        </ion-button>
+
+        <div class="demo-info">
+          <p><small><strong>Demo:</strong> Use as credenciais pré-preenchidas</small></p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

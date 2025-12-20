@@ -1,0 +1,34 @@
+.mapa-selector-container {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+}
+
+// Customização dos controles do Google Maps para seleção
+:global(.gm-style .gm-style-iw) {
+  font-family: var(--ion-font-family);
+}
+
+:global(.gm-style .gm-style-iw-c) {
+  border-radius: 8px;
+}
+
+// Personalização do Street View para melhor usabilidade
+:global(.gm-svpc) {
+  background-color: var(--ion-color-primary) !important;
+}
+
+// Estilo dos POIs (pontos de interesse) mais visíveis
+:global(.gm-style .gm-style-pbc) {
+  z-index: auto;
+}
+
+// Controles de zoom personalizados
+:global(.gmnoprint .gm-bundled-control) {
+  margin: 10px !important;
+}
+
+:global(.gmnoprint .gm-bundled-control .gm-bundled-control-inner) {
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}

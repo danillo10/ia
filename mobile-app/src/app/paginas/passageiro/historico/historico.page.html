@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/passageiro/mapa"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Histórico de Corridas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngIf="corridas.length > 0">
+    <ion-item *ngFor="let corrida of corridas" [routerLink]="['/passageiro/acompanhar', corrida.id]">
+      <ion-label>
+        <h2>Corrida #{{ corrida.id }}</h2>
+        <p>{{ corrida.data }} - R$ {{ corrida.valor.toFixed(2) }}</p>
+        <p><ion-badge [color]="corrida.estado === 'finalizada' ? 'success' : 'danger'">{{ corrida.estado }}</ion-badge></p>
+      </ion-label>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="corridas.length === 0" class="vazio">
+    <ion-icon name="car-outline"></ion-icon>
+    <p>Nenhuma corrida encontrada</p>
+  </div>
+</ion-content>
