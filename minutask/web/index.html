@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#080d1a" />
+  <title>Minutask — Microjobs urgentes</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="estilo.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="painel-esquerdo">
+      <div class="marca">
+        <img src="logo.svg" width="44" height="44" alt="" />
+        <div class="marca-texto">
+          <h1>Minu<span>task</span></h1>
+          <p>Microjobs urgentes</p>
+        </div>
+      </div>
+      <div>
+        <h2>Contrate ajuda<br /><span class="gradient-text">na hora</span></h2>
+        <p style="color: var(--texto-suave); max-width: 320px;">
+          Publique qualquer serviço informal. Trabalhadores online recebem e aceitam como no Uber.
+        </p>
+        <ul>
+          <li>Publicação em segundos</li>
+          <li>Notificação em tempo real</li>
+          <li>Aceite único — sem disputa</li>
+          <li>Qualquer tipo de serviço</li>
+        </ul>
+      </div>
+      <p style="font-size: 0.8rem; color: var(--texto-muted);">MVP · C9digital-inspired UI</p>
+    </aside>
+
+    <div class="coluna-form">
+      <div class="marca" style="margin-bottom: 1.5rem;">
+        <img src="logo.svg" width="44" height="44" alt="Minutask" />
+        <div class="marca-texto">
+          <h1>Minu<span>task</span></h1>
+          <p>Microjobs urgentes</p>
+        </div>
+      </div>
+
+      <h2 class="titulo-form">Publicar microjob</h2>
+      <p class="subtitulo-form">Trabalhadores online recebem a oferta na hora.</p>
+      <span class="chip-mvp">⚡ MVP — e-mail demo já preenchido</span>
+
+      <form id="form-tarefa" class="card">
+        <label for="email">E-mail do contratante</label>
+        <input type="email" id="email" name="email" required
+          value="contratante1@minutask.local" />
+
+        <label for="descricao">O que você precisa?</label>
+        <textarea id="descricao" name="descricao" rows="4" required minlength="10"
+          placeholder="Ex.: Montar móvel, entrega urgente, pintura..."></textarea>
+
+        <label for="categoria">Categoria (opcional)</label>
+        <input type="text" id="categoria" name="categoria" placeholder="limpeza, entrega, reforma" />
+
+        <label for="valor_sugerido">Valor sugerido (R$)</label>
+        <input type="number" id="valor_sugerido" name="valor_sugerido" min="0" step="5" value="50" />
+
+        <label for="endereco">Endereço ou referência</label>
+        <input type="text" id="endereco" name="endereco" placeholder="Rua, bairro, cidade" />
+
+        <div class="geo">
+          <div>
+            <label for="lat">Latitude</label>
+            <input type="number" name="lat" step="any" required id="lat" />
+          </div>
+          <div>
+            <label for="lon">Longitude</label>
+            <input type="number" name="lon" step="any" required id="lon" />
+          </div>
+        </div>
+        <button type="button" id="btn-geo" class="secundario">📍 Usar minha localização</button>
+        <button type="submit" class="primario">Publicar e notificar trabalhadores →</button>
+      </form>
+
+      <p id="mensagem" class="mensagem" hidden></p>
+
+      <div class="rodape">
+        <p>Após o primeiro aceite, as notificações param para os demais.</p>
+        <div class="links-apps">
+          <a href="http://localhost:8091" target="_blank" rel="noopener">App contratante</a>
+          <span>·</span>
+          <a href="http://localhost:8092" target="_blank" rel="noopener">App trabalhador</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

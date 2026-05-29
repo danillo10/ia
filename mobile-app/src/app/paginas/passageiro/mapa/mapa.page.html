@@ -38,6 +38,7 @@
             (ionInput)="onBuscaOrigemChange($event)"
             placeholder="Ex: Rua da União (sem número)"
             debounce="300"
+            legacy
           ></ion-input>
           <ion-icon 
             *ngIf="buscaOrigemTexto" 
@@ -97,6 +98,7 @@
             (ionInput)="onBuscaDestinoChange($event)"
             placeholder="Ex: Shopping Recife (próximos a você)"
             debounce="300"
+            legacy
           ></ion-input>
           <ion-icon 
             *ngIf="buscaDestinoTexto" 

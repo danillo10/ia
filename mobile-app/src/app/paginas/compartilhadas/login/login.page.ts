@@ -103,12 +103,11 @@ export class LoginPage implements OnInit {
         await toast.present();
         this.alternarModo();
       } else {
-        await this.authService.entrar(email, senha).toPromise();
-        const usuario = await this.authService.obterUsuario().toPromise();
+        const resposta = await this.authService.entrar(email, senha).toPromise();
         
-        if (usuario?.papel === 'passageiro') {
+        if (resposta?.usuario?.papel === 'passageiro') {
           this.router.navigate(['/passageiro/mapa']);
-        } else if (usuario?.papel === 'motociclista') {
+        } else if (resposta?.usuario?.papel === 'motociclista') {
           this.router.navigate(['/motociclista/chamadas']);
         } else {
           this.router.navigate(['/selecionar-perfil']);

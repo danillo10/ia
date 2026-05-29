@@ -1,0 +1,65 @@
+# Minutask — Docker OPCIONAL (dev no PC: ./scripts/dev-backend.sh)
+# Subir stack: docker compose --profile docker up -d
+# Parar:       docker compose --profile docker down
+services:
+  minutask-backend:
+    profiles: ["docker"]
+    build: ./backend
+    container_name: minutask-backend
+    env_file:
+      - .env
+    environment:
+      API_PORT: 8001
+    ports:
+      - "8001:8001"
+    depends_on:
+      minutask-mysql:
+        condition: service_healthy
+      minutask-rabbitmq:
+        condition: service_started
+    volumes:
+      - ./backend:/app
+      - minutask_uploads:/app/uploads
+    command: ["sh", "-c", "python -m app.semente_dados || true; alembic upgrade head || true; uvicorn app.main:api --host 0.0.0.0 --port 8001 --reload"]
+
+  minutask-mysql:
+    profiles: ["docker"]
+    image: mysql:8.0
+    container_name: minutask-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: minutask
+      MYSQL_USER: minutask
+      MYSQL_PASSWORD: minutask
+    ports:
+      - "3308:3306"
+    volumes:
+      - minutask_mysqldata:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  minutask-rabbitmq:
+    profiles: ["docker"]
+    image: rabbitmq:3-management-alpine
+    container_name: minutask-rabbitmq
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+
+  minutask-web:
+    profiles: ["docker"]
+    image: nginx:alpine
+    container_name: minutask-web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/usr/share/nginx/html:ro
+
+volumes:
+  minutask_mysqldata:
+  minutask_uploads:

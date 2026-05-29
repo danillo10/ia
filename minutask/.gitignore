@@ -1,0 +1,5 @@
+.env
+.env.*
+!.env.exemplo
+backend/uploads/
+backend/minutask_dev.sqlite3

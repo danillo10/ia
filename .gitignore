@@ -30,3 +30,14 @@ __pycache__/
 www/
 platforms/
 plugins/
+.angular/
+
+# Flutter/Dart
+.dart_tool/
+*.iml
+
+# Logs locais
+*.log
+
+# SQLite dev
+*.sqlite3

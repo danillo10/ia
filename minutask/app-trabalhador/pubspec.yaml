@@ -1,0 +1,31 @@
+name: minutask_trabalhador
+description: Minutask — app do trabalhador (aceitar/recusar microjobs)
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.0
+  shared_preferences: ^2.2.2
+  geolocator: ^11.0.0
+  web_socket_channel: ^2.4.0
+  image_picker: ^1.0.7
+  google_fonts: ^6.2.1
+  audioplayers: ^6.1.0
+  flutter_local_notifications: ^17.2.4
+  permission_handler: ^11.3.1
+  url_launcher: ^6.2.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/sounds/

@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from typing import List
-from app.core.deps import obter_db
+from app.core.db import obter_sessao
 from app.modelos.corrida import Corrida
 from app.esquemas.corrida import CorridaCompleta
 
@@ -15,13 +15,13 @@ roteador = APIRouter(prefix="/corridas", tags=["admin"])
 
 @roteador.get("", response_model=List[CorridaCompleta])
 async def listar_todas_corridas(
-    db: AsyncSession = Depends(obter_db)
+    sessao: AsyncSession = Depends(obter_sessao)
 ):
     """
     Lista todas as corridas do sistema com informações completas de passageiro e motorista.
     Usado pelo painel admin.
     """
-    resultado = await db.execute(
+    resultado = await sessao.execute(
         select(Corrida)
         .options(
             selectinload(Corrida.passageiro),
